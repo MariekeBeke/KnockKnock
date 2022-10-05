@@ -37,7 +37,6 @@ public class KnockKnockClient {
 
         String hostName = "localhost";
         int portnumber = 4444;
-        boolean listening = true;
 
         try (
                 Socket kkSocket = new Socket(hostName, portnumber);
@@ -49,9 +48,7 @@ public class KnockKnockClient {
             new KKClientListenThread(kkSocket).start();
             BufferedReader stdIn =
                     new BufferedReader(new InputStreamReader(System.in));
-            String fromServer;
             String fromUser;
-
 
             while ((fromUser = stdIn.readLine()) != null) {
                 System.out.println("From client to server: " + fromUser);          //todo eigen gebruikersnaam

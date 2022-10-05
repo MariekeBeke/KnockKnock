@@ -34,28 +34,24 @@ import java.io.*;
 
 public class KKMultiServerThread extends Thread {
     private Socket socket = null;
+    private PrintWriter out = null;
 
-    public KKMultiServerThread(Socket socket) {
+    public KKMultiServerThread(Socket socket, PrintWriter out) {
         super("KKMultiServerThread");
         this.socket = socket;
+        this.out = out;
     }
 
     public void run() {
-
         try (
-                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(
                         new InputStreamReader(
                                 socket.getInputStream()));
         ) {
             String inputLine, outputLine;
-            KnockKnockProtocol kkp = new KnockKnockProtocol();
             out.println("Welcome in the chat!");
-
             while ((inputLine = in.readLine()) != null) {
-
-                // out.println(username + ": " + outputLine);
-                out.println(": " + inputLine);
+                out.println("from server to clients: " + inputLine);
             }
             socket.close();
         } catch (IOException e) {
