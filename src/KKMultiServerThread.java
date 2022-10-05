@@ -47,12 +47,15 @@ public class KKMultiServerThread extends Thread {
         try (
                 BufferedReader in = new BufferedReader(
                         new InputStreamReader(socket.getInputStream()));
+                PrintWriter out =
+                        new PrintWriter(socket.getOutputStream(), true);
         ) {
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
                 for (int i = 0; i<outs.size(); i++) {
                     outs.get(i).println("from server to clients: " + inputLine);
                 }
+                out.println("toegekomen!!!");
             }
             socket.close();
         } catch (IOException e) {
