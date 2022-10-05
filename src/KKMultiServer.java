@@ -31,12 +31,15 @@
 
 import java.net.*;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class KKMultiServer {
     public static void main(String[] args) throws IOException {
 
         int portNumber = 4444;
         boolean listening = true;
+        // List<String> usernames = new ArrayList<String>();
 
         try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
             while (listening) {

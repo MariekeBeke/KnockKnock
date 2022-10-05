@@ -54,10 +54,10 @@ public class KKMultiServerThread extends Thread {
             out.println(outputLine);
 
             while ((inputLine = in.readLine()) != null) {
-                outputLine = kkp.processInput(inputLine);
-                out.println(outputLine);
-                if (outputLine.equals("Bye"))
-                    break;
+                //outputLine = kkp.processInput(inputLine);
+
+                // out.println(username + ": " + outputLine);
+                out.println(": " + outputLine);
             }
             socket.close();
         } catch (IOException e) {
