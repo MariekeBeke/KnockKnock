@@ -31,27 +31,28 @@
 
 import java.net.*;
 import java.io.*;
+import java.util.List;
 
 public class KKMultiServerThread extends Thread {
     private Socket socket = null;
-    private PrintWriter out = null;
+    private List<PrintWriter> outs = null;
 
-    public KKMultiServerThread(Socket socket, PrintWriter out) {
+    public KKMultiServerThread(Socket socket, List<PrintWriter> outs) {
         super("KKMultiServerThread");
         this.socket = socket;
-        this.out = out;
+        this.outs = outs;
     }
 
     public void run() {
         try (
                 BufferedReader in = new BufferedReader(
-                        new InputStreamReader(
-                                socket.getInputStream()));
+                        new InputStreamReader(socket.getInputStream()));
         ) {
-            String inputLine, outputLine;
-            out.println("Welcome in the chat!");
+            String inputLine;
             while ((inputLine = in.readLine()) != null) {
-                out.println("from server to clients: " + inputLine);
+                for (int i = 0; i<outs.size(); i++) {
+                    outs.get(i).println("from server to clients: " + inputLine);
+                }
             }
             socket.close();
         } catch (IOException e) {
