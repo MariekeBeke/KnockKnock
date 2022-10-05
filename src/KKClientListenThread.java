@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 1995, 2014, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 1995, 2013, Oracle and/or its affiliates. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -32,36 +32,33 @@
 import java.net.*;
 import java.io.*;
 
-public class KnockKnockServer {
-    public static void main(String[] args) throws IOException {
+public class KKClientListenThread extends Thread {
+    private Socket socket = null;
+    //private PrintWriter out = null;
+    //private BufferedReader in = null;
 
-        int portNumber = 4444;
 
-        try (
-                ServerSocket serverSocket = new ServerSocket(portNumber);
-                Socket clientSocket = serverSocket.accept();
-                PrintWriter out =
-                        new PrintWriter(clientSocket.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(
-                        new InputStreamReader(clientSocket.getInputStream()));
-        ) {
+    public KKClientListenThread(Socket socket) {//PrintWriter out, BufferedReader in) {
+        super("KKClientListenThread");
+        this.socket = socket;
+    }
 
-            String inputLine, outputLine;
-            // Initiate conversation with client
-            KnockKnockProtocol kkp = new KnockKnockProtocol();
-            outputLine = kkp.processInput(null);
-            out.println(outputLine);
+    public void run() {
 
-            while ((inputLine = in.readLine()) != null) {
-                outputLine = kkp.processInput(inputLine);
-                out.println(outputLine);
-                if (outputLine.equals("Bye."))
-                    break;
+        try {
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(
+                            socket.getInputStream()));
+            String inputLineFromServer;
+            out.println("Welcome in the chat!");
+            while ((inputLineFromServer = in.readLine()) != null) {
+                // out.println(username + ": " + outputLine);
+                out.println("from other client: " + inputLineFromServer);
             }
+            socket.close();
         } catch (IOException e) {
-            System.out.println("Exception caught when trying to listen on port "
-                    + portNumber + " or listening for a connection");
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 }

@@ -35,31 +35,27 @@ import java.net.*;
 public class KnockKnockClient {
     public static void main(String[] args) throws IOException {
 
-
         String hostName = "localhost";
-        int portNumber = 4444;
+        int portnumber = 4444;
+        boolean listening = true;
 
         try (
-                Socket kkSocket = new Socket(hostName, portNumber);
+                Socket kkSocket = new Socket(hostName, portnumber);
                 PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(
-                        new InputStreamReader(kkSocket.getInputStream()));
+                        new InputStreamReader(
+                                kkSocket.getInputStream()));
         ) {
+            new KKClientListenThread(kkSocket).start();
             BufferedReader stdIn =
                     new BufferedReader(new InputStreamReader(System.in));
             String fromServer;
             String fromUser;
 
-            while ((fromServer = in.readLine()) != null) {
-                System.out.println("Server: " + fromServer);
-                if (fromServer.equals("Bye."))
-                    break;
 
-                fromUser = stdIn.readLine();
-                if (fromUser != null) {
-                    System.out.println("Client: " + fromUser);
-                    out.println(fromUser);
-                }
+            while ((fromUser = stdIn.readLine()) != null) {
+                System.out.println("From client to server: " + fromUser);          //todo eigen gebruikersnaam
+                out.println(fromUser);
             }
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host " + hostName);

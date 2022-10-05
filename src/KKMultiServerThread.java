@@ -50,14 +50,12 @@ public class KKMultiServerThread extends Thread {
         ) {
             String inputLine, outputLine;
             KnockKnockProtocol kkp = new KnockKnockProtocol();
-            outputLine = kkp.processInput(null);
-            out.println(outputLine);
+            out.println("Welcome in the chat!");
 
             while ((inputLine = in.readLine()) != null) {
-                //outputLine = kkp.processInput(inputLine);
 
                 // out.println(username + ": " + outputLine);
-                out.println(": " + outputLine);
+                out.println(": " + inputLine);
             }
             socket.close();
         } catch (IOException e) {
