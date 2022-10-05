@@ -50,12 +50,14 @@ public class KKMultiServerThread extends Thread {
                 PrintWriter out =
                         new PrintWriter(socket.getOutputStream(), true);
         ) {
+            out.println("Welcome in the chat!");
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
+                System.out.println(inputLine + " is toegekomen!!!");
+                //System.out.println(outs);
                 for (int i = 0; i<outs.size(); i++) {
-                    outs.get(i).println("from server to clients: " + inputLine);
+                    outs.get(i).println("From server to clients: " + inputLine);
                 }
-                out.println("toegekomen!!!");
             }
             socket.close();
         } catch (IOException e) {

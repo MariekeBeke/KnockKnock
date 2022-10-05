@@ -51,10 +51,9 @@ public class KKClientListenThread extends Thread {
                     new InputStreamReader(
                             socket.getInputStream()));
             String inputLineFromServer;
-            out.println("Welcome in the chat!");
             while ((inputLineFromServer = in.readLine()) != null) {
                 // out.println(username + ": " + outputLine);
-                out.println("from other client: " + inputLineFromServer);
+                System.out.println(inputLineFromServer);
             }
             socket.close();
         } catch (IOException e) {

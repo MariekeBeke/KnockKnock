@@ -41,15 +41,12 @@ public class KnockKnockClient {
         try (
                 Socket kkSocket = new Socket(hostName, portnumber);
                 PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(
-                        new InputStreamReader(
-                                kkSocket.getInputStream()));
         ) {
             new KKClientListenThread(kkSocket).start();
             BufferedReader stdIn =
                     new BufferedReader(new InputStreamReader(System.in));
-            String fromUser;
 
+            String fromUser;
             while ((fromUser = stdIn.readLine()) != null) {
                 System.out.println("From client to server: " + fromUser);          //todo eigen gebruikersnaam
                 out.println(fromUser);

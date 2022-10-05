@@ -43,10 +43,10 @@ public class KKMultiServer {
 
         try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
             while (listening) {
-                serverSocket.accept();
-                PrintWriter out = new PrintWriter(serverSocket.accept().getOutputStream(), true);
+                Socket s = serverSocket.accept();
+                PrintWriter out = new PrintWriter(s.getOutputStream(), true);
                 actievePrintWriters.add(out);
-                new KKMultiServerThread(serverSocket.accept(), actievePrintWriters).start();
+                new KKMultiServerThread(s, actievePrintWriters).start();
             }
         } catch (IOException e) {
             System.err.println("Could not listen on port " + portNumber);
