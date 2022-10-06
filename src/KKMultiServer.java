@@ -33,6 +33,7 @@ import java.net.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class KKMultiServer {
     public static void main(String[] args) throws IOException {
@@ -40,17 +41,43 @@ public class KKMultiServer {
         int portNumber = 4444;
         boolean listening = true;
         List<PrintWriter> actievePrintWriters = new ArrayList<PrintWriter>();
+        List<String> usernames = new ArrayList<>();
+
+        Scanner sc = new Scanner(System.in);
 
         try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
             while (listening) {
                 Socket s = serverSocket.accept();
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(s.getInputStream()));
                 PrintWriter out = new PrintWriter(s.getOutputStream(), true);
                 actievePrintWriters.add(out);
-                new KKMultiServerThread(s, actievePrintWriters).start();
+
+                boolean validName = false;
+                out.println("Enter a username");
+                String username = in.readLine();
+                while (!validName) {
+                    int count = 0;
+                    for (String name : usernames) {
+                        if (name.equals(username)) {
+                            count++;
+                        }
+                    }
+                    validName = count==0;
+                    if (!validName) {
+                        out.println("This name is already in use. Choose another username");
+                        username = in.readLine();
+                    }
+                    else usernames.add(username);
+                }
+
+                new KKMultiServerThread(s, actievePrintWriters, username).start();
             }
         } catch (IOException e) {
             System.err.println("Could not listen on port " + portNumber);
             System.exit(-1);
         }
+
+        sc.close();
     }
 }

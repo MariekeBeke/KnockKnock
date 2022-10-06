@@ -34,13 +34,15 @@ import java.io.*;
 import java.util.List;
 
 public class KKMultiServerThread extends Thread {
-    private Socket socket = null;
-    private List<PrintWriter> outs = null;
+    private Socket socket;
+    private List<PrintWriter> outs;
+    private String username;
 
-    public KKMultiServerThread(Socket socket, List<PrintWriter> outs) {
+    public KKMultiServerThread(Socket socket, List<PrintWriter> outs, String username) {
         super("KKMultiServerThread");
         this.socket = socket;
         this.outs = outs;
+        this.username = username;
     }
 
     public void run() {
@@ -53,10 +55,9 @@ public class KKMultiServerThread extends Thread {
             out.println("Welcome in the chat!");
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
-                System.out.println(inputLine + " is toegekomen!!!");
-                //System.out.println(outs);
+                System.out.println(inputLine + " is toegekomen!");
                 for (int i = 0; i<outs.size(); i++) {
-                    outs.get(i).println("From server to clients: " + inputLine);
+                    outs.get(i).println(username + " ~ " + inputLine);
                 }
             }
             socket.close();

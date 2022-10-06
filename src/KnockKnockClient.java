@@ -48,7 +48,6 @@ public class KnockKnockClient {
 
             String fromUser;
             while ((fromUser = stdIn.readLine()) != null) {
-                System.out.println("From client to server: " + fromUser);          //todo eigen gebruikersnaam
                 out.println(fromUser);
             }
         } catch (UnknownHostException e) {
