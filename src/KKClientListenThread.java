@@ -58,6 +58,7 @@ public class KKClientListenThread extends Thread {
             while ((inputLineFromServer = in.readLine()) != null) {
                 // out.println(username + ": " + outputLine);
                 System.out.println(inputLineFromServer);
+                guiClient.addMessage(inputLineFromServer);
             }
             socket.close();
         } catch (IOException e) {

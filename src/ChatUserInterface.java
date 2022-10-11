@@ -92,6 +92,11 @@ public class ChatUserInterface {
         newFrame.setSize(470, 300);
     }
 
+    public void addMessage(String inputLineFromServer) {
+        if (chatBox != null)
+            chatBox.append(inputLineFromServer + "\n");
+    }
+
     class sendMessageButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             if (messageBox.getText().length() < 1) {
