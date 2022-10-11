@@ -38,9 +38,9 @@ public class ChatUserInterface {
 
     public void preDisplay() {
         newFrame.setVisible(false);
-        preFrame = new JFrame("Choose your username!");
+        preFrame = new JFrame("Choose your username");
         usernameChooser = new JTextField();
-        JLabel chooseUsernameLabel = new JLabel("Pick a username: ");
+        JLabel chooseUsernameLabel = new JLabel("Enter a username: ");
         JButton enterServer = new JButton("Enter Chatbox");
         JPanel prePanel = new JPanel(new GridBagLayout());
 
@@ -70,7 +70,7 @@ public class ChatUserInterface {
         southPanel.setLayout(new GridBagLayout());
 
         messageBox = new JTextField(30);
-        sendMessage = new JButton("Send message");
+        sendMessage = new JButton("Send");
         chatBox = new JTextArea();
         chatBox.setEditable(false);
         newFrame.add(new JScrollPane(chatBox), BorderLayout.CENTER);

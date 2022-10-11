@@ -50,6 +50,10 @@ public class KKClientListenThread extends Thread {
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(
                             socket.getInputStream()));
+
+            ChatUserInterface guiClient = new ChatUserInterface();
+            guiClient.preDisplay();
+
             String inputLineFromServer;
             while ((inputLineFromServer = in.readLine()) != null) {
                 // out.println(username + ": " + outputLine);
